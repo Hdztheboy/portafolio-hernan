@@ -1,0 +1,557 @@
+/* styles.css – colors, layout and responsive rules for every page of the portfolio. */
+/* ===== Design tokens: colors and light/dark theme ===== */
+:root {
+  --red:#ea3d3d;
+  --yellow:#ffd92b;
+  --blue:#12a4ff;
+  --ink:#141414;
+  --paper:#fffdf7;
+  --pi:#141414;
+  --card:#fff;
+  --line:#e4dfd2;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --paper:#15162a;
+    --pi:#f6f2e6;
+    --card:#1f2040;
+    --line:#34365e;
+    color-scheme:dark;
+  }
+}
+
+/* ===== Base ===== */
+html {
+  scroll-padding-top:70px;
+}
+
+* {
+  box-sizing:border-box;
+}
+
+body {
+  margin:0;
+  font:400 1.05rem/1.65 "DM Sans",system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--pi);
+}
+
+a {
+  color:inherit;
+}
+
+:focus-visible {
+  outline:3px solid var(--blue);
+  outline-offset:3px;
+}
+
+h1,h2,h3 {
+  margin:0;
+}
+
+h1,h2 {
+  font-family:"Bowlby One","Arial Black",sans-serif;
+  font-weight:400;
+  line-height:1.05;
+}
+
+/* ===== Navigation bar ===== */
+nav {
+  position:sticky;
+  top:env(safe-area-inset-top,0px);
+  z-index:5;
+  background:var(--red);
+  display:flex;
+  justify-content:center;
+  gap:clamp(1rem,4vw,2.6rem);
+  padding:.85rem 1rem;
+  border-bottom:3px solid var(--ink);
+}
+
+nav a {
+  font-weight:700;
+  color:var(--yellow);
+  text-decoration:none;
+  padding:.1rem .2rem;
+}
+
+nav a:hover,nav a.on {
+  text-decoration:underline;
+  text-underline-offset:6px;
+  text-decoration-thickness:3px;
+}
+
+.view[hidden] {
+  display:none;
+}
+
+/* ===== Shared pieces (colored bands, headings, buttons) ===== */
+.band {
+  background:var(--red);
+  color:#fff;
+  border-bottom:3px solid var(--ink);
+}
+
+.stroke {
+  color:var(--yellow);
+  -webkit-text-stroke:2px var(--ink);
+  paint-order:stroke fill;
+  text-shadow:4px 4px 0 var(--ink);
+}
+
+/* ===== Page: Home ===== */
+.hero {
+  display:grid;
+  grid-template-columns:minmax(240px,5fr) 7fr;
+  align-items:center;
+  gap:1rem;
+  padding:clamp(1.5rem,5vw,3rem) clamp(1rem,5vw,4rem);
+  min-height:min(80vh,680px);
+}
+
+.hero img {
+  width:100%;
+  max-width:520px;
+  justify-self:center;
+  display:block;
+}
+
+.hero h1 {
+  font-size:clamp(2.4rem,7vw,5.6rem);
+}
+
+.role {
+  font-size:clamp(1.1rem,2.3vw,1.55rem);
+  font-weight:700;
+  margin:1.2rem 0 1.8rem;
+}
+
+
+.btn,.pill {
+  display:inline-block;
+  text-decoration:none;
+  font:700 1rem "DM Sans",sans-serif;
+  padding:.7rem 1.4rem;
+  border-radius:999px;
+  border:2px solid var(--ink);
+  cursor:pointer;
+}
+
+.btn {
+  background:var(--yellow);
+  color:var(--ink);
+  box-shadow:4px 4px 0 var(--ink);
+}
+
+.btn:hover {
+  background:#fff;
+  transform:translate(-2px,-2px);
+  box-shadow:6px 6px 0 var(--ink);
+}
+
+.pill {
+  background:var(--ink);
+  color:#fff;
+  padding:.5rem 1.05rem;
+}
+
+.pill:hover {
+  background:var(--yellow);
+  color:var(--ink);
+}
+
+.soc {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.6rem;
+}
+
+.pad {
+  padding:clamp(2.5rem,7vw,5rem) clamp(1rem,5vw,4rem);
+}
+
+.wrap {
+  max-width:1100px;
+  margin:0 auto;
+}
+
+/* ===== Page: About me ===== */
+.about {
+  display:grid;
+  grid-template-columns:minmax(220px,5fr) 6fr;
+  gap:clamp(1.5rem,5vw,4rem);
+  align-items:center;
+}
+
+.wrap.about {
+  max-width:1200px;
+}
+
+.about img {
+  width:100%;
+  max-width:480px;
+  justify-self:center;
+  display:block;
+}
+
+.about h2 {
+  font-size:clamp(2rem,5vw,3.4rem);
+  margin-bottom:1.2rem;
+}
+
+.about p {
+  margin:0 0 1rem;
+  max-width:64ch;
+}
+
+/* ===== Page: Work (grid of cards) ===== */
+.title {
+  font-size:clamp(2rem,5vw,3.4rem);
+  text-align:center;
+  margin-bottom:2.2rem;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:2.2rem 1.6rem;
+}
+
+.tile {
+  display:block;
+  text-align:center;
+  text-decoration:none;
+}
+
+.im {
+  aspect-ratio:1;
+  background:var(--card);
+  border:2px solid var(--ink);
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  box-shadow:6px 6px 0 var(--ink);
+  transition:transform .15s,box-shadow .15s;
+}
+
+.tile:hover .im {
+  transform:translate(-3px,-3px);
+  box-shadow:9px 9px 0 var(--blue);
+}
+
+.im img,.im svg {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
+.tile h3 {
+  font-size:1.15rem;
+  margin:1.2rem 0 .1rem;
+}
+
+.tile small {
+  opacity:.65;
+  font-size:.92rem;
+}
+
+/* ===== Pages: project and galleries ===== */
+.back {
+  display:inline-block;
+  font-weight:700;
+  margin-bottom:1.4rem;
+}
+
+.ph {
+  font-size:clamp(2rem,5.5vw,3.6rem);
+  margin-bottom:.5rem;
+}
+
+.meta {
+  margin:0 0 1.6rem;
+  opacity:.7;
+}
+
+video {
+  width:100%;
+  display:block;
+  border:2px solid var(--ink);
+  border-radius:8px;
+  box-shadow:6px 6px 0 var(--ink);
+  background:#000;
+  margin-bottom:2.4rem;
+}
+
+.proj h3 {
+  font-size:1.3rem;
+  margin:2rem 0 .7rem;
+  padding-left:.7rem;
+  border-left:6px solid var(--red);
+}
+
+.proj p {
+  max-width:70ch;
+  margin:0 0 .9rem;
+}
+
+.proj ul {
+  padding-left:1.2rem;
+  max-width:70ch;
+}
+
+.proj li {
+  margin-bottom:.5rem;
+}
+
+.tools {
+  list-style:none;
+  padding:0!important;
+  display:grid;
+  gap:.8rem;
+}
+
+.tools li {
+  display:flex;
+  gap:.9rem;
+  align-items:flex-start;
+}
+
+.sk {
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  list-style:none;
+  padding:0!important;
+}
+
+.sk li {
+  background:var(--yellow);
+  color:var(--ink);
+  border:2px solid var(--ink);
+  border-radius:999px;
+  padding:.2rem .9rem;
+  margin:0;
+}
+
+
+/* ===== Page: Contact me ===== */
+.contact {
+  background:var(--yellow);
+  color:#141414;
+}
+
+form {
+  max-width:520px;
+  margin:0 auto;
+  display:grid;
+  gap:1.1rem;
+}
+
+label {
+  font-weight:700;
+  display:grid;
+  gap:.4rem;
+}
+
+input,textarea {
+  font:inherit;
+  padding:.75rem .9rem;
+  border:2px solid var(--ink);
+  border-radius:6px;
+  background:#fff;
+  color:#141414;
+}
+
+textarea {
+  min-height:140px;
+  resize:vertical;
+}
+
+form .btn {
+  justify-self:start;
+  background:var(--ink);
+  color:#fff;
+  box-shadow:none;
+}
+
+form .btn:hover {
+  background:var(--red);
+}
+
+.ok {
+  min-height:1.5rem;
+  font-weight:700;
+  margin:0;
+}
+
+/* ===== Footer ===== */
+footer {
+  background:var(--ink);
+  color:#fff;
+  text-align:center;
+  padding:1.4rem 1rem;
+  font-size:.95rem;
+}
+
+/* ===== Responsive: phones and tablets ===== */
+@media(max-width:760px) {
+  .hero,.about {
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+  .hero img {
+    max-width:300px;
+  }
+  .go,.soc {
+    justify-content:center;
+  }
+  .about img {
+    max-width:320px;
+    margin:0 auto;
+  }
+  .about p {
+    margin-inline:auto;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  * {
+    transition:none!important;
+  }
+}
+
+.intro {
+  max-width:70ch;
+  margin:0 0 2rem;
+}
+
+.gal {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1.6rem;
+}
+
+.gi {
+  all:unset;
+  box-sizing:border-box;
+  cursor:pointer;
+  display:block;
+  background:var(--card);
+  border:2px solid var(--ink);
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:5px 5px 0 var(--ink);
+  transition:transform .15s,box-shadow .15s;
+}
+
+.gi:hover {
+  transform:translate(-3px,-3px);
+  box-shadow:8px 8px 0 var(--blue);
+}
+
+.gi:focus-visible {
+  outline:3px solid var(--blue);
+  outline-offset:3px;
+}
+
+.gi img {
+  width:100%;
+  aspect-ratio:1;
+  object-fit:contain;
+  padding:1rem;
+  background:#fff;
+  display:block;
+  border-bottom:2px solid var(--ink);
+}
+
+.hint {
+  opacity:.7;
+  font-size:.95rem;
+  margin:-1rem 0 1.6rem!important;
+}
+
+.ic {
+  width:46px;
+  height:46px;
+  padding:0!important;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+}
+
+.ic svg {
+  width:22px;
+  height:22px;
+  fill:currentColor;
+}
+
+.gi span {
+  display:block;
+  padding:.8rem 1rem 1rem;
+}
+
+.gi b {
+  display:block;
+  line-height:1.3;
+}
+
+.gi small {
+  display:block;
+  opacity:.7;
+  margin-top:.25rem;
+  font-size:.9rem;
+}
+
+dialog {
+  border:0;
+  padding:1rem;
+  background:var(--paper);
+  color:var(--pi);
+  width:min(96vw,1100px);
+  max-height:94vh;
+  overflow:auto;
+  border-radius:8px;
+}
+
+dialog::backdrop {
+  background:rgba(0,0,0,.78);
+}
+
+dialog img {
+  width:100%;
+  display:block;
+  margin-top:.8rem;
+  background:#fff;
+}
+
+dialog .btn {
+  background:var(--ink);
+  color:#fff;
+  padding:.4rem 1.1rem;
+}
+
+/* ===== Additions: hidden elements, contact buttons, tool images ===== */
+[hidden] { display: none !important; }
+.actions { display: flex; flex-wrap: wrap; gap: .8rem; }
+.alt-email { text-align: center; margin: 1.6rem 0 0; font-weight: 700; }
+
+/* ===== Tool logos (inside project pages) ===== */
+.lg {
+  flex: none;
+  width: 96px;
+  height: 56px;
+  padding: 6px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.lg img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
